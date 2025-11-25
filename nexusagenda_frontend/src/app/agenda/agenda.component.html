@@ -1,0 +1,41 @@
+<div class="agenda-container">
+  <div class="header">
+    <button (click)="logout()" class="btn-logout">Cerrar sesión</button>
+  </div>
+
+  <h2>Mi Agenda de Eventos</h2>
+
+  <form (ngSubmit)="createEvent()">
+    <h3>Crear Nuevo Evento</h3>
+    <div>
+      <label for="title">Título:</label>
+      <input type="text" id="title" [(ngModel)]="newEvent.title" name="title" required>
+    </div>
+    <div>
+      <label for="description">Descripción:</label>
+      <input type="text" id="description" [(ngModel)]="newEvent.description" name="description">
+    </div>
+    <div>
+      <label for="dateTime">Fecha y Hora:</label>
+      <input type="datetime-local" id="dateTime" [(ngModel)]="newEvent.dateTime" name="dateTime" required>
+    </div>
+    <button type="submit">Guardar Evento</button>
+  </form>
+
+  <hr>
+
+  <div *ngIf="events.length > 0">
+    <ul>
+      <li *ngFor="let event of events">
+        <h3>{{ event.title }}</h3>
+        <p>{{ event.description }}</p>
+        <p>Fecha: {{ event.dateTime }}</p>
+        <button (click)="deleteEvent(event.id)" class="delete-button">Eliminar</button>
+        <button (click)="editEvent(event)" class="edit-button">Editar</button>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="events.length === 0">
+    <p>No tienes eventos en tu agenda. ¡Crea uno!</p>
+  </div>
+</div>
