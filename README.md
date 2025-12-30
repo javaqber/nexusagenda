@@ -9,7 +9,7 @@ La aplicación permite a los usuarios registrarse, iniciar sesión de forma segu
 ## 📍 Demo en Vivo
 
 Puedes probar la aplicación aquí:
-["Enlace a Netlify"]
+[https://nexusagenda.netlify.app/](https://nexusagenda.netlify.app/)
 **Usuario de prueba:** userDemo@nexusagenda.com | **Password:** 123456
 
 ## 🛠️ Stack Tecnológico
