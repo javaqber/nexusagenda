@@ -14,6 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -42,13 +47,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Deshabilitamos CSRF
+                // 1. ACTIVAMOS CORS
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
                         // Permite peticiones OPTIONS
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // Permite el acceso público a los endpoints de registro y login
                         .requestMatchers("/api/users/register", "/api/users/login").permitAll()
-                        // Esta linea hace que el endpoint de eventos sea publico
+                        // Endpoint de eventos público
                         .requestMatchers("/api/events/**").permitAll()
                         // Cualquier otra petición requiere autenticación
                         .anyRequest().authenticated())
@@ -63,4 +71,25 @@ public class SecurityConfig {
         return http.build();
     }
 
+    // 2. DEFINIMOS LA CONFIGURACIÓN DE CORS
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        // Se permite localhost (para pruebas) y Netlify (producción)
+        configuration.setAllowedOrigins(List.of("http://localhost:4200", "https://nexusagenda.netlify.app"));
+
+        // Métodos permitidos
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // Cabeceras permitidas
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With", "Accept"));
+
+        // Permitir credenciales
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 }
