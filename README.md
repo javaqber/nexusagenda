@@ -12,6 +12,48 @@ Puedes probar la aplicación aquí:
 [https://nexusagenda.netlify.app/](https://nexusagenda.netlify.app/)
 **Usuario de prueba:** userDemo@nexusagenda.com | **Password:** 123456
 
+## 🛠️ Instalación y Uso Local
+
+### Prerrequisitos
+
+- **Java 21 (JDK)** instalado.
+- **Node.js y npm** (versión LTS recomendada).
+- **MySQL** instalado y ejecutándose.
+- **Git** instalado.
+
+### Pasos
+
+1.  **Clonar el repositorio:**
+
+    ```bash
+    git clone [https://github.com/javaqber/nexusagenda.git](https://github.com/javaqber/nexusagenda.git)
+    cd nexusagenda
+    ```
+
+2.  **Configurar Base de Datos:**
+
+    - Crea una base de datos vacía en MySQL llamada `nexusagenda_db`.
+    - Asegúrate de que el archivo `src/main/resources/application.properties` del Backend tiene tu usuario y contraseña de MySQL local.
+
+3.  **Arrancar el Backend (Spring Boot):**
+
+    ```bash
+    cd nexusagenda_backend
+    ./mvnw spring-boot:run
+    ```
+
+4.  **Arrancar el Frontend (Angular):**
+    Abre una nueva terminal:
+
+    ```bash
+    cd nexusagenda_frontend
+    npm install
+    ng serve -o
+    ```
+
+5.  **Acceder a la App:**
+    El navegador se abrirá automáticamente en: `http://localhost:4200`
+
 ## 🛠️ Stack Tecnológico
 
 ### Backend (API REST)
@@ -57,7 +99,7 @@ Edición y eliminación de eventos existentes.
 
 Interfaz de Usuario (UI) limpia e intuitiva.
 
-Validación de formularios en tiempo real (feedback visual al usuario).
+Validación de formularios en tiempo real.
 
 Navegación fluida como Single Page Application (SPA).
 
